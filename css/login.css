@@ -1,0 +1,28 @@
+body {
+  min-width: 320px;
+  max-width: 750px;
+  width: 10rem;
+  margin: 0 auto;
+  line-height: 1.5;
+  background-color: #e7e7e7;
+}
+.login {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-2rem);
+  width: 4rem;
+  line-height: 0.5rem;
+  font-size: 14px;
+  text-align: center;
+  background-color: #FFF;
+}
+.login label {
+  display: inline-block;
+  width: 50px;
+}
+.login p {
+  line-height: 14px;
+  color: red;
+  display: none;
+}

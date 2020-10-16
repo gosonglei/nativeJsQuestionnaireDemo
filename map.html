@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+
+<body>
+    <div id="chart"></div>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script>
+        $(function () {
+            initChart();
+        });
+
+        function initChart() {
+            $("#chart").css({
+                "width": "100%",
+                "height": "800px",
+                "margin": "auto"
+            });
+            var myChart = echarts.init(document.getElementById("chart"));
+            // myChart.showLoading();
+            $.get('./jinan.json', function (dataJson) {
+                // myChart.hideLoading();
+
+                echarts.registerMap('region', dataJson);
+                var option = {
+                    series: [{
+                        name: '县级地图',
+                        type: 'map',
+                        roam: true,
+                        // zoom:0.5, //默认显示级别
+                        // scaleLimit:{min:0.1,max:3}, // 缩放级别
+                        map: 'region',
+                        itemStyle: {
+                            normal: {
+                                areaColor: '#45c8ff',
+                                borderColor: '#fff'
+                            },
+                            emphasis: {
+                                areaColor: '#00aeee'
+                            }
+                        },
+                        itemStyle: {
+                            emphasis: {
+                                label: {
+                                    show: true
+                                }
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true
+                            },
+                            emphasis: {
+                                show: false
+                            }
+                        }
+                    }]
+                };
+                myChart.setOption(option);
+            });
+        }
+    </script>
+</body>

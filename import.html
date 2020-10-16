@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/import.css">
+    <script src="js/flexible.js"></script>
+</head>
+
+<body>
+    <header>
+        <div><img src="imges/logo@2x.png" alt="">答题</div>
+        <div>
+            <ul>
+                <li>我的问卷</li>
+                <li>你好</li>
+            </ul>
+        </div>
+    </header>
+    <section>
+        <div>导入试题</div>
+        <div>
+            <textarea name="questions" id="questions"></textarea>
+            <button id="submit">提交</button>
+        </div>
+    </section>
+
+    <div class="toTop">
+    </div>
+    <div class="toBottom">
+    </div>
+
+    <script src="js/mock.js"></script>
+    <script src="js/mock_data.js"></script>
+    <script src="js/myAjax.js"></script>
+    <script>
+        window.onload = function () {
+            let qc = document.querySelector("#questions")
+            console.log(qc.value)
+            qc_lists = []
+
+            document.querySelector("#submit").onclick = e => {
+                qc.value = qc.value.replace(/^\s+|\s+$/g, '')
+                qc.value.split(/\n\s/).forEach(element => {
+                    console.log(element.split(/\n/))
+                    let t = element.split(/\n/)
+                    if (t.length === 1) {
+                        qc_lists.push({
+                            type: 1, //填空
+                            title: t[0],
+                            options: []
+                        })
+                    } else {
+                        if (/\[多选题\]/.test(t[0])) {
+                            qc_lists.push({
+                                type: 2, //多选
+                                title: t[0],
+                                options: t.slice(1)
+                            })
+                        } else {
+                            qc_lists.push({
+                                type: 3, //单选
+                                title: t[0],
+                                options: t.slice(1)
+                            })
+                        }
+                    }
+                });
+                console.log(qc_lists)
+
+                myAjax("post", "/test/add", JSON.stringify(qc_lists), res => {
+                    console.log(res)
+                })
+            }
+        }
+    </script>
+</body>
+
+</html>

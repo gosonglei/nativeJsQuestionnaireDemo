@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/flexible.js"></script>
+</head>
+
+<body>
+    <header>
+        <div><img src="imges/logo@2x.png" alt="">答题</div>
+        <div>
+            <ul>
+                <li>我的问卷</li>
+                <li>你好</li>
+            </ul>
+        </div>
+    </header>
+    <section>
+        <p id="question_title">
+            题目
+        </p>
+        <div id="question">
+        </div>
+        <button class="suBtn">提交</button>
+    </section>
+
+    <div class="process">
+        <p></p>
+    </div>
+    <div class="toTop">
+    </div>
+    <div class="toBottom">
+    </div>
+
+    <script src="js/mock.js"></script>
+    <script src="js/mock_data.js"></script>
+    <script src="js/myAjax.js"></script>
+    <script>
+        function setQuestionContent(list, index) {
+
+            let opts = "",
+                type = "checkbox"
+            if (list.isRadio) {
+                type = "radio"
+            }
+            list.options.forEach(element => {
+                opts +=
+                    `<label><input type="${type}" name="${list.id}" value="${element.optionsID}">${element.content}</label>`
+            });
+
+            return `
+                <div class="${list.id}">
+                    <p>${index}、${list.question}</p>
+                    ${opts}
+                </div>
+            `
+        }
+        //根据name获取被选择的选项
+        function getSelected(name) {
+            let obj = document.getElementsByName(name),
+                item = []
+            obj.forEach(e => {
+                if (e.checked) {
+                    item.push(e.value)
+                }
+            })
+            return item
+        }
+
+        function getProgress(q_c_l) {
+            let selected = []
+            let selectedObserve = new Proxy(selected, {
+                get: function (target, property) {
+                    //获取数组的长度,去除元素为空的选项
+                    let t = 0
+                    target.forEach(ele => {
+                        if (ele.length > 0) {
+                            t = t + 1
+                        }
+                    })
+                    return t
+                },
+                set: function (target, property, value, receiver) {
+                    target[property] = value;
+                    return true;
+                }
+            });
+            let allRadio = document.querySelectorAll("#question > div")
+            allRadio.forEach(ele => {
+                ele.addEventListener('change', function () {
+                    selectedObserve[this.className] = getSelected(this.className)
+                    // selectedObserve[this.className]
+                    document.querySelector('.process>p').style.height = (selectedObserve[0] / q_c_l) *
+                        100 + "%"
+                    document.querySelector('.process>p').innerHTML = (selectedObserve[0] / q_c_l) *
+                        100 + "%"
+                })
+            })
+        }
+
+        window.onload = function () {
+            //加载题目
+            let q_html = document.querySelector("#question")
+            let q_t_html = document.querySelector("#question_title")
+            myAjax("get", "/test/getQuestions", null, res => {
+                console.log(res)
+                let q_c = res.data
+                if (res.status === 200) {
+                    let t = ""
+                    q_c.forEach((e, i) => {
+                        t += setQuestionContent(e, i + 1)
+                    })
+                    q_html.innerHTML = t
+                    q_t_html.innerHTML = res.q_title
+                }
+                //加载完题目后,为题目添加change时间
+                getProgress(q_c.length)
+            })
+
+            //提交答案
+            document.querySelector(".suBtn").onclick = e => {
+                let queLists = document.querySelectorAll("#question > div"),
+                    selArr = []
+
+                queLists.forEach(ele => {
+                    console.log(ele.className)
+                    console.log(getSelected(ele.className))
+                    selArr.push({
+                        question_id: ele.className,
+                        ans_arr: getSelected(ele.className)
+                    })
+                })
+                for (let i = 0; i < selArr.length; i++) {
+                    console.log(selArr[i].ans_arr.length)
+                    if (selArr[i].ans_arr.length === 0) {
+                        alert(`第${i+1}题还没选择`)
+                        return
+                    }
+                }
+                console.log("selArr", selArr)
+                myAjax("post", "/test/postAns", JSON.stringify(selArr), res => {
+                    console.log(res)
+                    if (res.status === 200) {
+                        alert(`恭喜你，获得${res.score}分！！！`)
+                        window.location = "index.html"
+                    }
+                })
+            }
+
+            //go top
+            document.querySelector(".toTop").onclick = e => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+            //go bottom
+            document.querySelector(".toBottom").onclick = e => {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: "smooth"
+                })
+            }
+        }
+    </script>
+</body>
+
+</html>

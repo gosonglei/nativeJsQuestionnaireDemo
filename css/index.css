@@ -1,0 +1,137 @@
+body {
+  min-width: 750px;
+  max-width: 900px;
+  width: 10rem;
+  margin: 0 auto;
+  line-height: 1.5;
+  background-color: #e7e7e7;
+  font-family: "Microsoft YaHei", arial, georgia, verdana, simsun, helvetica, sans-serif;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  display: inline-block;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10rem;
+  height: 58px;
+  line-height: 58px;
+  background-color: #ffffff;
+  font-size: 16px;
+  display: flex;
+}
+header div {
+  flex: 1;
+}
+header div img {
+  width: 32px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+header div:nth-child(1) {
+  text-align: center;
+}
+header div:nth-child(2) {
+  text-align: right;
+  margin-right: 1rem;
+}
+section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 68px;
+  margin-bottom: 30px;
+  padding: 20px 100px;
+  background-color: rgba(0, 149, 255, 0.3);
+  font-size: 16px;
+}
+section label {
+  display: block;
+  line-height: 40px;
+}
+section input[type=radio],
+section input[type=checkbox] {
+  margin: 4px;
+}
+section > p:first-child {
+  font-size: 28px;
+  color: white;
+  font-weight: 600;
+  align-self: center;
+}
+section div > p {
+  font-size: 18px;
+}
+section button {
+  margin-top: 50px;
+  align-self: center;
+  width: 60px;
+  font-size: 24px;
+  border: 0;
+  padding: 5px;
+  background-color: #e7e7e7;
+  color: rgba(0, 149, 255, 0.6);
+  border-radius: 10px;
+}
+section button:hover {
+  cursor: pointer;
+  background-color: rgba(0, 149, 255, 0.6);
+  color: #ffffff;
+}
+section button:focus {
+  outline: 0;
+}
+.toTop {
+  position: fixed;
+  bottom: 150px;
+  right: 50%;
+  transform: translateX(510px);
+  width: 32px;
+  height: 32px;
+  background: url(../imges/uparrow.png) no-repeat;
+  background-size: 100% 100%;
+  border: 5px solid #bfbfbf;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.toBottom {
+  position: fixed;
+  bottom: 90px;
+  right: 50%;
+  transform: translateX(510px);
+  width: 32px;
+  height: 32px;
+  background: url(../imges/downarrow.png) no-repeat;
+  background-size: 100% 100%;
+  border: 5px solid #bfbfbf;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.process {
+  position: fixed;
+  top: 150px;
+  right: 50%;
+  transform: translateX(490px);
+  overflow: hidden;
+  width: 30px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 12px;
+  background-color: #fff;
+  border-radius: 20px;
+}
+.process * {
+  margin: 0;
+  padding: 0;
+}
+.process p:nth-child(1) {
+  width: 100%;
+  border-radius: 20px;
+  background-color: rgba(0, 149, 255, 0.3);
+}

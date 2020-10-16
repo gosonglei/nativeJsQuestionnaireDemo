@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/flexible.js"></script>
+</head>
+
+<body>
+
+    <div class="login">
+        <div><label for="userID">用户名:</label><input type="text" name="userID" class="userID" id="userID"></div>
+        <div><label for="userPWD">密 码:</label><input type="password" class="userPWD" name="userPWD" id="userPWD"></div>
+        <p class="error">error</p>
+        <button class="submit">提交</button>
+    </div>
+
+    <script src="js/mock.js"></script>
+    <script src="js/mock_data.js"></script>
+    <script src="js/myAjax.js"></script>
+    <script>
+        window.onload = function () {
+
+            let btn = document.querySelector(".submit")
+            console.log(btn)
+            btn.onclick = function (e) {
+                let userID = document.querySelector(".userID").value
+                let userPwd = document.querySelector(".userPWD").value
+                let err = document.querySelector(".error")
+                if (userID === '' || userPwd === '') {
+                    err.style.display = "block"
+                    err.innerText = "用户id或者密码不能为空!"
+                    return
+                }
+                let postData = `userID=${userID}&userPwd=${userPwd}`
+                myAjax("POST", "/login", postData, res => {
+                    if (res.message === "ok") {
+                        window.location = "index.html"
+                    } else {
+                        err.style.display = "block"
+                        err.innerText = "登录失败!!!"
+                    }
+                })
+                console.log(e)
+            }
+
+            let enterInput = document.querySelector(".userPWD")
+            enterInput.addEventListener("keyup", e => {
+                e.preventDefault();
+                if (e.keyCode === 13) {
+                    btn.click()
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
