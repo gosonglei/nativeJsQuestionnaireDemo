@@ -15,17 +15,22 @@
         <div><img src="imges/logo@2x.png" alt="">答题</div>
         <div>
             <ul>
-                <li>我的问卷</li>
-                <li>你好</li>
+                <li><a href="index.html">我的问卷</a></li>
+                <li><a href="import.html">新增</a></li>
+                <li><a href="login.html">你好,Login</a></li>
             </ul>
         </div>
     </header>
     <section>
         <div>导入试题</div>
+        <p>1、题目与题目之间需空一行，题目可以不加题号，题干中间不得换行 <br>
+            2、题干与选项，及各选项之间需回车换行，选项不得以数字开头（会被识别为题干）<br>
+            3、题目无选项直接空一行，会默认识别为文本型题目<br>
+        </p>
         <div>
             <textarea name="questions" id="questions"></textarea>
-            <button id="submit">提交</button>
         </div>
+        <button id="submit">提交</button>
     </section>
 
     <div class="toTop">
@@ -73,6 +78,21 @@
 
                 myAjax("post", "/test/add", JSON.stringify(qc_lists), res => {
                     console.log(res)
+                })
+            }
+
+            //go top
+            document.querySelector(".toTop").onclick = e => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+            //go bottom
+            document.querySelector(".toBottom").onclick = e => {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: "smooth"
                 })
             }
         }

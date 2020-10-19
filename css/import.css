@@ -5,7 +5,10 @@ body {
   margin: 0 auto;
   line-height: 1.5;
   background-color: #e7e7e7;
-  font-family: "Microsoft YaHei", arial, georgia, verdana, simsun, helvetica, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", "Microsoft YaHei UI", "微软雅黑", sans-serif;
+}
+a {
+  text-decoration: none;
 }
 ul {
   list-style: none;
@@ -41,6 +44,13 @@ header div:nth-child(2) {
   text-align: right;
   margin-right: 1rem;
 }
+header div:nth-child(2) ul {
+  display: flex;
+  justify-content: flex-end;
+}
+header div:nth-child(2) ul li {
+  margin-left: 30px;
+}
 section {
   display: flex;
   flex-direction: column;
@@ -50,19 +60,46 @@ section {
   background-color: rgba(0, 149, 255, 0.3);
   font-size: 16px;
 }
-section div:nth-child(1) {
-  align-self: center;
-  margin: 30px;
+section p:nth-of-type(1) {
+  font-size: 12px;
+  color: #444;
 }
-section div:nth-child(2) textarea {
+section div:nth-of-type(1) {
+  margin: 30px;
+  font-size: 28px;
+  color: white;
+  font-weight: 600;
+  align-self: center;
+}
+section div:nth-of-type(2) textarea {
+  font-size: 14px;
   resize: none;
   width: 100%;
   height: 600px;
   border: 0;
   overflow-y: scroll;
 }
-section div:nth-child(2) textarea:focus {
+section div:nth-of-type(2) textarea:focus {
   outline: none;
+}
+section button {
+  margin-top: 50px;
+  align-self: center;
+  width: 60px;
+  font-size: 24px;
+  border: 0;
+  padding: 5px;
+  background-color: #e7e7e7;
+  color: rgba(0, 149, 255, 0.6);
+  border-radius: 10px;
+}
+section button:hover {
+  cursor: pointer;
+  background-color: rgba(0, 149, 255, 0.6);
+  color: #ffffff;
+}
+section button:focus {
+  outline: 0;
 }
 .toTop {
   position: fixed;
